@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 
 import TodoItem from './todoItem';
 
-export default function PaginatedItems({ deleteTodo, updateTodo, itemsPerPage, items }) {
+export default function PaginatedItems({itemIsSelected, setItemIsSelected, deleteTodo, updateTodo, itemsPerPage, items }) {
     // We start with an empty list of items.
     const [currentItems, setCurrentItems] = useState(items);
     const [pageCount, setPageCount] = useState(0);
@@ -34,7 +34,12 @@ export default function PaginatedItems({ deleteTodo, updateTodo, itemsPerPage, i
         {currentItems.map(todoItem => (
               todoItem == null ? null : (
                         <Col lg={4} md={6} sm={12} xs={12} key={todoItem.id}>
-                            <TodoItem deleteTodo={deleteTodo} updateTodo={updateTodo} todoItem={todoItem}/>
+                            <TodoItem 
+                            itemIsSelected={itemIsSelected}
+                            setItemIsSelected={setItemIsSelected}
+                            deleteTodo={deleteTodo} 
+                            updateTodo={updateTodo} 
+                            todoItem={todoItem}/>
                         </Col>
                         )
                     ))}

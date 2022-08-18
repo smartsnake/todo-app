@@ -15,6 +15,7 @@ export default function TodoList() {
 
     const [todoList, setTodoList] = useState([]);
     const [searchTodoList, setSearchTodoList] = useState(todoList);
+    const [itemIsSelected, setItemIsSelected] = useState(false);
 
     const [showForm, setShowForm] = useState(false);
     const searchRef = useRef("");
@@ -68,7 +69,7 @@ export default function TodoList() {
         //Create the item in the database.
         createTodoItem(todoItem).then(res => {
             //Add the item to the state.
-            setTodoList([...todoList, todoItem]);
+            setTodoList([todoItem, ...todoList]);
         }).catch(error => {
             console.log(error);
         }
@@ -142,7 +143,13 @@ export default function TodoList() {
             <Col style={{paddingTop:"15px"}} >
                 <Row>
                     
-                    <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={9} items={searchTodoList}/>
+                    <PaginatedItems 
+                    itemIsSelected={itemIsSelected}
+                    setItemIsSelected={setItemIsSelected}
+                    deleteTodo={deleteTodo}
+                    updateTodo={updateTodo} 
+                    itemsPerPage={9} 
+                    items={searchTodoList}/>
 
                 </Row>
             </Col>

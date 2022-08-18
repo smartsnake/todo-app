@@ -60,6 +60,8 @@ export default function TodoList() {
             return;
         }
 
+        //Create a new todo item.
+        //The id is randomly generated because the API always returns {id:201}
         const todoItem = {
             "userId": form.elements.userid.value,
             "id": Math.floor(Math.random() * (1000 - todoList.length + 1) + todoList.length),
@@ -69,6 +71,8 @@ export default function TodoList() {
         //Create the item in the database.
         createTodoItem(todoItem).then(res => {
             //Add the item to the state.
+            console.log(res);
+
             setTodoList([todoItem,...todoList]);
         }).catch(error => {
             console.log(error);
@@ -142,9 +146,9 @@ export default function TodoList() {
             </Row>
             <Col style={{paddingTop:"15px", alignItems:"center", alignContent:"center", alignSelf:"center"}} >
                 <ListGroup horizontal as="ul">
-                    <ListGroup.Item as="li" style={{width:"7%"}}>ID</ListGroup.Item>
-                    <ListGroup.Item as="li" style={{width:"7%"}}>UserID</ListGroup.Item>
-                    <ListGroup.Item as="li" style={{width:"100%"}}>Title</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"lightskyblue"}}>ID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"skyblue"}}>UserID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"100%", backgroundColor:"lightblue"}}>Title</ListGroup.Item>
                 </ListGroup>
                     
                     <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={16} items={searchTodoList}/>

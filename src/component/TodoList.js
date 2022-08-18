@@ -124,7 +124,7 @@ export default function TodoList() {
                     <Button style={{flex:1, width:"100%", height:"100%"}} variant={showForm ? "secondary" : "primary"} onClick={() => handleForm()}>{showForm ? "Cancel" : "Create ToDo"}</Button>
                 </Col>
                 <Col>
-                    <input style={{flex:1, width:"100%", height:"100%"}} ref={searchRef} onChange={handleSearch} placeholder='Search'/>
+                    <input style={{flex:1, width:"100%", height:"100%", borderRadius: 15 }} ref={searchRef} onChange={handleSearch} placeholder='Search'/>
                 </Col>
             </Row>
             <Col style={{paddingTop:"15px"}} >

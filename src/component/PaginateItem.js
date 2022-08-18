@@ -33,7 +33,7 @@ export default function PaginatedItems({ deleteTodo, updateTodo, itemsPerPage, i
         <>
         {currentItems.map(todoItem => (
               todoItem == null ? null : (
-                        <Col lg={4} md={6} sm={12} xs={12} key={todoItem.id}>
+                        <Col key={todoItem.id}>
                             <TodoItem deleteTodo={deleteTodo} updateTodo={updateTodo} todoItem={todoItem}/>
                         </Col>
                         )

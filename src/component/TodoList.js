@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import PaginatedItems from './PaginateItem';
 
@@ -61,14 +62,14 @@ export default function TodoList() {
 
         const todoItem = {
             "userId": form.elements.userid.value,
-            "id": Math.floor(Math.random() * 1000000),
+            "id": Math.floor(Math.random() * (1000 - todoList.length + 1) + todoList.length),
             "title": form.elements.title.value,
             "completed": false
         };
         //Create the item in the database.
         createTodoItem(todoItem).then(res => {
             //Add the item to the state.
-            setTodoList([...todoList, todoItem]);
+            setTodoList([todoItem,...todoList]);
         }).catch(error => {
             console.log(error);
         }
@@ -119,8 +120,8 @@ export default function TodoList() {
                     <Card style={{padding:"25px", width:"100%" , textAlign:"left"}}>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formEditTodo" />
-                            <Form.Label>Todo:</Form.Label>
-                            <Form.Control name="title" type="text" placeholder="Enter Todo" />
+                            <Form.Label>Title:</Form.Label>
+                            <Form.Control name="title" type="text" placeholder="Enter Title" />
 
                             <Form.Label>User ID:</Form.Label>
                             <Form.Control name="userid" type="text" placeholder="Enter user ID" />
@@ -139,12 +140,15 @@ export default function TodoList() {
                     <input style={{flex:1, width:"100%", height:"100%", borderRadius: 15 }} ref={searchRef} onChange={handleSearch} placeholder='Search'/>
                 </Col>
             </Row>
-            <Col style={{paddingTop:"15px"}} >
-                <Row>
+            <Col style={{paddingTop:"15px", alignItems:"center", alignContent:"center", alignSelf:"center"}} >
+                <ListGroup horizontal as="ul">
+                    <ListGroup.Item as="li" style={{width:"7%"}}>ID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"7%"}}>UserID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"100%"}}>Title</ListGroup.Item>
+                </ListGroup>
                     
-                    <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={9} items={searchTodoList}/>
+                    <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={16} items={searchTodoList}/>
 
-                </Row>
             </Col>
         </Container>
         

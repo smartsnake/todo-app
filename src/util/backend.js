@@ -12,7 +12,6 @@ export async function getTodoItem(id) {
 
 // create a new todo item in the database
 export async function createTodoItem(todoItem) {
-    console.log(todoItem);
     return fetch(endpoint, {
         method: "POST",
         body: JSON.stringify(todoItem)

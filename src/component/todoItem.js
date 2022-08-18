@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import { updateTodoItem, deleteTodoItem} from '../util/backend';
 
@@ -47,7 +47,6 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
     updateTodoItem(todoItem.id, updatedTodoItem).then(res => {
       console.log(res);
 
-
       //API doesnt really update the todoItem, so we need to update the state manually
       updateTodo(todoItem.id, updatedTodoItem);
       //Reset form
@@ -73,35 +72,35 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
   return (
     <Container onClick={handleSelect}>
     {isSelected ? (
-    <Card style={{ height:"240px", width:"100%", textAlign:"left"}}>
-          <Card.Body>
-            <Card.Text>ID: <input disabled={true} value={todoItem.id}/></Card.Text>
+    <ListGroup horizontal as="ul">
+            <ListGroup.Item as="li" style={{width:"7%"}}><input style={{width:"80%"}} disabled={true} value={todoItem.id}/></ListGroup.Item>
             
-            <Card.Text>User ID: <input onChange={event => setTodoUserId(event.target.value)} value={todoUserId}/></Card.Text>
+            <ListGroup.Item as="li" style={{width:"7%"}}><input style={{width:"80%"}} onChange={event => setTodoUserId(event.target.value)} value={todoUserId}/></ListGroup.Item>
             
-            <Card.Text>Title: <input style={{flex:1, width:"80%"}} onChange={event => setTodoTitle(event.target.value)} value={todoTitle}/></Card.Text>
+            <ListGroup.Item as="li" style={{width:"75%"}} >
+              <input style={{flex:1, width:"80%", paddingRight:"10px"}} onChange={event => setTodoTitle(event.target.value)} value={todoTitle}/>
+              Completed: <input type="checkbox" onChange={() => setTodoCompleted(!todoCompleted)} defaultChecked={todoCompleted}/>
+            </ListGroup.Item>
             
-            <Card.Text>Completed: 
-              <input type="checkbox" onChange={() => setTodoCompleted(!todoCompleted)} defaultChecked={todoCompleted}/> 
-              {" "}
+            {/* <ListGroup.Item as="li">
+               
+              
+            </ListGroup.Item> */}
+            <ListGroup.Item as="li" style={{width:"25%"}}>
               <Button variant="primary" onClick={handleUpdate}>Update</Button>
               {" "}
               <Button variant="danger" onClick={handleDelete}>Delete</Button> 
               {" "}
               <Button variant="secondary" onClick={handleDeselect}>Cancel</Button>
-            </Card.Text>
-            
-          </Card.Body>
-      </Card>
+            </ListGroup.Item>
+      </ListGroup>
       ) : 
       (
-      <Card style={{flex:1, height:"240px", width:"100%", textAlign:"left"}}>
-          <Card.Body>
-            <Card.Text>ID: {todoItem.id}</Card.Text>
-            <Card.Text>User ID: {todoItem.userId}</Card.Text>
-              {todoItem.completed ? <Card.Text><strike>{todoItem.title}</strike></Card.Text> :<Card.Text>{todoItem.title}</Card.Text>}
-          </Card.Body>
-      </Card>
+      <ListGroup horizontal as="ul">
+            <ListGroup.Item as="li" style={{width:"7%"}}>{todoItem.id}</ListGroup.Item>
+            <ListGroup.Item as="li" style={{width:"7%"}}>{todoItem.userId}</ListGroup.Item>
+              {todoItem.completed ? <ListGroup.Item as="li" style={{width:"100%"}}><strike>{todoItem.title}</strike></ListGroup.Item> :<ListGroup.Item as="li" style={{width:"100%"}}>{todoItem.title}</ListGroup.Item>}
+      </ListGroup>
     )}  
     
     </Container>

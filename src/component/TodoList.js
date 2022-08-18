@@ -146,9 +146,9 @@ export default function TodoList() {
             </Row>
             <Col style={{paddingTop:"15px", alignItems:"center", alignContent:"center", alignSelf:"center"}} >
                 <ListGroup horizontal as="ul">
-                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"lightskyblue"}}>ID</ListGroup.Item>
-                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"skyblue"}}>UserID</ListGroup.Item>
-                    <ListGroup.Item as="li" style={{width:"100%", backgroundColor:"lightblue"}}>Title</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"lightgrey"}}>ID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"7%", backgroundColor:"lightgrey"}}>UserID</ListGroup.Item>
+                    <ListGroup.Item as="li" style={{width:"100%", backgroundColor:"lightgrey"}}>Title</ListGroup.Item>
                 </ListGroup>
                     
                     <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={16} items={searchTodoList}/>

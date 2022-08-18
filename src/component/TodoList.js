@@ -16,6 +16,7 @@ export default function TodoList() {
 
     const [todoList, setTodoList] = useState([]);
     const [searchTodoList, setSearchTodoList] = useState(todoList);
+    const [itemIsSelected, setItemIsSelected] = useState(false);
 
     const [showForm, setShowForm] = useState(false);
     const searchRef = useRef("");
@@ -151,7 +152,13 @@ export default function TodoList() {
                     <ListGroup.Item as="li" style={{width:"100%", backgroundColor:"lightgrey"}}>Title</ListGroup.Item>
                 </ListGroup>
                     
-                    <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={16} items={searchTodoList}/>
+                    <PaginatedItems 
+                    itemIsSelected={itemIsSelected}
+                    setItemIsSelected={setItemIsSelected}
+                    deleteTodo={deleteTodo} 
+                    updateTodo={updateTodo} 
+                    itemsPerPage={16} 
+                    items={searchTodoList}/>
 
             </Col>
         </Container>

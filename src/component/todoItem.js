@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 import { updateTodoItem, deleteTodoItem} from '../util/backend';
 
-export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
+export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo, updateTodo, todoItem}) {
 
   //isSelected is a boolean that is used to determine if the item is selected or not.
   //If it is selected, the item will allow you to edit its properties.
@@ -19,8 +19,9 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
 
   //Handles the edit state of the item.
   function handleSelect() {
-    if(!isSelected){
+    if(!itemIsSelected){
       setIsSelected(true);
+      setItemIsSelected(true);
     }
   }
   //Handles the cancel state of the item.
@@ -32,6 +33,7 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
     setTodoCompleted(todoItem.completed);
     if(isSelected){
       setIsSelected(false);
+      setItemIsSelected(false);
     }
   }
 
@@ -49,8 +51,10 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
 
       //API doesnt really update the todoItem, so we need to update the state manually
       updateTodo(todoItem.id, updatedTodoItem);
+
       //Reset form
       setIsSelected(false);
+      setItemIsSelected(false);
     }).catch(error => {
       console.log("ID: " + todoItem.id + " ERROR: " + error);
     }
@@ -63,6 +67,7 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
       console.log(res);
       //Delete the item from the state.
       deleteTodo(todoItem.id);
+      setItemIsSelected(false);
     }).catch(error => {
       console.log(error);
     }

@@ -19,9 +19,13 @@ export default function TodoList() {
     const [showForm, setShowForm] = useState(false);
     const searchRef = useRef("");
 
+    //Get the todo list from the database and filter it by the search term.
+    //This is called when the component is first rendered.
     useEffect(() => {
         getTodoList().then(todoList => {
+            //Get the todo list from the database.
             setTodoList(todoList);
+            //Filter the todo list by the search term.
             setSearchTodoList(todoList);
         }).catch(error => {
             console.log(error);
@@ -29,6 +33,7 @@ export default function TodoList() {
         );
     } , []);
 
+    //Filter the todo list by the search term.
     useEffect(() =>{
         setSearchTodoList(todoList.filter(todo => () =>{
             if(todo !== null){
@@ -37,11 +42,13 @@ export default function TodoList() {
         }));
     }, [todoList]);
 
+    //Show/hide form that allows you to create new todo item.
     function handleForm(){
         
         setShowForm(!showForm);
     }
 
+    //Create a new todo item in the database.
     function handleSubmit(event) {
         event.preventDefault();
         const form = event.target;
@@ -58,7 +65,9 @@ export default function TodoList() {
             "title": form.elements.title.value,
             "completed": false
         };
+        //Create the item in the database.
         createTodoItem(todoItem).then(res => {
+            //Add the item to the state.
             setTodoList([...todoList, todoItem]);
         }).catch(error => {
             console.log(error);
@@ -70,6 +79,7 @@ export default function TodoList() {
         handleForm();
     }
 
+    //Anytime the search term changes, filter the todo list by the search term.
     function handleSearch(event) {
         event.preventDefault();
         const search = event.target.value;
@@ -83,6 +93,7 @@ export default function TodoList() {
         setSearchTodoList(filteredList);
     }
 
+    //Updates the todo item in the state.
     function updateTodo(id, todoItem) {
         setTodoList(todoList.map(todo => {
             if(todo.id === id){
@@ -92,6 +103,7 @@ export default function TodoList() {
         }));
     }
 
+    //Delete the todo item from the state.
     function deleteTodo(id) {
         setTodoList(todoList.filter(todo => todo.id !== id));
     }
@@ -130,7 +142,6 @@ export default function TodoList() {
             <Col style={{paddingTop:"15px"}} >
                 <Row>
                     
-
                     <PaginatedItems deleteTodo={deleteTodo} updateTodo={updateTodo} itemsPerPage={9} items={searchTodoList}/>
 
                 </Row>

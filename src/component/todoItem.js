@@ -8,18 +8,22 @@ import { updateTodoItem, deleteTodoItem} from '../util/backend';
 
 export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
 
+  //isSelected is a boolean that is used to determine if the item is selected or not.
+  //If it is selected, the item will allow you to edit its properties.
   const [isSelected, setIsSelected] = useState(false);
 
+  //These are the states that are used to edit the item.
   const [todoUserId, setTodoUserId] = useState(todoItem.userId);
   const [todoTitle, setTodoTitle] = useState(todoItem.title);
   const [todoCompleted, setTodoCompleted] = useState(todoItem.completed);
 
-
+  //Handles the edit state of the item.
   function handleSelect() {
     if(!isSelected){
       setIsSelected(true);
     }
   }
+  //Handles the cancel state of the item.
   function handleDeselect() {
 
     //Reset form
@@ -30,6 +34,8 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
       setIsSelected(false);
     }
   }
+
+  //Handles the update state of the item.
   function handleUpdate() {
     const updatedTodoItem = {
       "userId": todoUserId,
@@ -37,22 +43,26 @@ export default function TodoItem({deleteTodo, updateTodo, todoItem}) {
       "title": todoTitle,
       "completed": todoCompleted
     };
+    //Update the item in the database.
     updateTodoItem(todoItem.id, updatedTodoItem).then(res => {
       console.log(res);
 
 
       //API doesnt really update the todoItem, so we need to update the state manually
       updateTodo(todoItem.id, updatedTodoItem);
+      //Reset form
       setIsSelected(false);
     }).catch(error => {
-      console.log(updatedTodoItem);
       console.log("ID: " + todoItem.id + " ERROR: " + error);
     }
     );
   }
+  //Handles the delete state of the item.
   function handleDelete() {
+    //Delete the item in the database.
     deleteTodoItem(todoItem.id).then(res => {
       console.log(res);
+      //Delete the item from the state.
       deleteTodo(todoItem.id);
     }).catch(error => {
       console.log(error);

@@ -92,15 +92,11 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
             
             <Card.Text>Title: <input style={{flex:1, width:"80%"}} onChange={event => setTodoTitle(event.target.value)} value={todoTitle}/></Card.Text>
             
-            <Card.Text>Completed: 
-              <input type="checkbox" onChange={() => setTodoCompleted(!todoCompleted)} defaultChecked={todoCompleted}/> 
-              {" "}
               <Button variant="primary" onClick={handleUpdate}>Update</Button>
               {" "}
               <Button variant="danger" onClick={handleDelete}>Delete</Button> 
               {" "}
               <Button variant="secondary" onClick={handleDeselect}>Cancel</Button>
-            </Card.Text>
             
           </Card.Body>
       </Card>

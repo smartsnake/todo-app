@@ -75,7 +75,7 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
   }
 
   return (
-    <Container onClick={handleSelect}>
+    <Container >
     {isSelected ? (
     <ListGroup horizontal as="ul">
             <ListGroup.Item as="li" style={{width:"7%"}}><input style={{width:"80%"}} disabled={true} value={todoItem.id}/></ListGroup.Item>
@@ -84,7 +84,7 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
             
             <ListGroup.Item as="li" style={{width:"75%"}} >
               <input style={{flex:1, width:"80%", paddingRight:"10px"}} onChange={event => setTodoTitle(event.target.value)} value={todoTitle}/>
-              Completed: <input type="checkbox" onChange={() => setTodoCompleted(!todoCompleted)} defaultChecked={todoCompleted}/>
+              
             </ListGroup.Item>
             
             {/* <ListGroup.Item as="li">
@@ -104,7 +104,18 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
       <ListGroup horizontal as="ul">
             <ListGroup.Item as="li" style={{width:"7%"}}>{todoItem.id}</ListGroup.Item>
             <ListGroup.Item as="li" style={{width:"7%"}}>{todoItem.userId}</ListGroup.Item>
-              {todoItem.completed ? <ListGroup.Item as="li" style={{width:"100%"}}><strike>{todoItem.title}</strike></ListGroup.Item> :<ListGroup.Item as="li" style={{width:"100%"}}>{todoItem.title}</ListGroup.Item>}
+              {todoCompleted ? 
+              <ListGroup.Item as="li" style={{width:"100%"}}>
+                <strike>{todoItem.title}</strike>
+              </ListGroup.Item>:
+              <ListGroup.Item as="li" style={{width:"100%"}}>
+                {todoItem.title}
+                </ListGroup.Item>}
+                <ListGroup.Item as="li" style={{width:"25%", justifyContent: "center", alignItems: "center"}}> 
+                  <Button variant="primary" style={{float:"right"}} onClick={()=>{setTodoCompleted(!todoCompleted); handleUpdate()}}>{todoCompleted? "Not Complete":"Complete"}</Button>
+                  <Button variant="primary" style={{float:"right", marginRight:20}} onClick={handleSelect}>Edit</Button>
+                </ListGroup.Item>
+    
       </ListGroup>
     )}  
     

@@ -17,6 +17,8 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
   const [todoTitle, setTodoTitle] = useState(todoItem.title);
   const [todoCompleted, setTodoCompleted] = useState(todoItem.completed);
 
+  const [displayTitle, setDisplayTitle] = useState(todoItem.title.length > 45 ? todoItem.title.substring(0, 45) + "..." : todoItem.title);
+
   //Handles the edit state of the item.
   function handleSelect() {
     if(!itemIsSelected){
@@ -47,12 +49,12 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
     };
     //Update the item in the database.
     updateTodoItem(todoItem.id, updatedTodoItem).then(res => {
-      console.log(res);
-
 
       //API doesnt really update the todoItem, so we need to update the state manually
       updateTodo(todoItem.id, updatedTodoItem);
+
       //Reset form
+      setDisplayTitle(todoTitle.length > 45 ? todoTitle.substring(0, 45) + "..." : todoTitle);
       setIsSelected(false);
       setItemIsSelected(false);
     }).catch(error => {
@@ -74,8 +76,13 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
     );
   }
 
+  function handleButtonComplete(){
+    setTodoCompleted(!todoCompleted);
+    handleUpdate();
+  }
+
   return (
-    <Container onClick={handleSelect}>
+    <Container >
     {isSelected ? (
     <Card style={{ height:"240px", width:"100%", textAlign:"left"}}>
           <Card.Body>
@@ -103,7 +110,15 @@ export default function TodoItem({itemIsSelected, setItemIsSelected, deleteTodo,
           <Card.Body>
             <Card.Text>ID: {todoItem.id}</Card.Text>
             <Card.Text>User ID: {todoItem.userId}</Card.Text>
-              {todoItem.completed ? <Card.Text><strike>{todoItem.title}</strike></Card.Text> :<Card.Text>{todoItem.title}</Card.Text>}
+              {
+              todoCompleted ? 
+              <Card.Text><strike>{displayTitle}</strike></Card.Text> :
+              <Card.Text>{displayTitle}</Card.Text>}
+
+              <Button variant="primary" onClick={handleButtonComplete}>{todoCompleted ? "Not Complete":"Complete"}</Button>
+
+              <Button style={{margin: 25}} variant="primary" onClick={handleSelect}>Edit</Button>
+              
           </Card.Body>
       </Card>
     )}  

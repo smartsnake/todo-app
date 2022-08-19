@@ -26,6 +26,7 @@ export default function PaginatedItems({itemIsSelected, setItemIsSelected, delet
       console.log(
         `User requested page number ${event.selected}, which is offset ${newOffset}`
       );
+      setItemIsSelected(false);
       setItemOffset(newOffset);
     };
   
